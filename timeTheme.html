@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Time & Theme Page</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s, color 0.5s;
+        }
+        .time-container {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+        .toggle-btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            border: none;
+            background-color: #444;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body onload="updateTime()"><!--calls the function when the page loads-->
+
+    <h1>Dynamic HTML Page</h1>
+    <div class="time-container" id="timeDisplay"></div><!--placeholder for time display-->
+    <button class="toggle-btn" onclick="toggleMode()">Switch Mode</button><!--button for theme toggle-->
+
+    <script>
+        function updateTime() {
+            //function to continuously update time every second
+            let now = new Date(); //get surrent date and time
+            let hours = now.getHours();//extract hours
+            let minutes = now.getMinutes();//extract minutes
+            let seconds = now.getSeconds();//extract seconds
+            //format time into HH:MM:SS
+            let timeString = hours.toString().padStart(2, '0') + ":" +
+                             minutes.toString().padStart(2, '0') + ":" +
+                             seconds.toString().padStart(2, '0');
+            //display the formatted time on the page
+            document.getElementById("timeDisplay").innerText = "Current Time: " + timeString;
+
+            // change the background color based on time of day
+            if (hours >= 5 && hours < 12) {
+                document.body.style.backgroundColor = "#FFD700"; // Morning (Gold)
+                document.body.style.color = "black";
+            } else if (hours >= 12 && hours < 18) {
+                document.body.style.backgroundColor = "#87CEEB"; // Afternoon (Sky Blue)
+                document.body.style.color = "black";
+            } else {
+                document.body.style.backgroundColor = "#2C3E50"; // Night (Dark Blue)
+                document.body.style.color = "white";
+            }
+
+            setTimeout(updateTime, 1000); //calls the function again every second
+        }
+        //function to toggle between light mode and dark mode manually
+        function toggleMode() {
+            if (document.body.style.backgroundColor === "black") {
+                document.body.style.backgroundColor = "white";//switch to light mode
+                document.body.style.color = "black";
+            } else {
+                document.body.style.backgroundColor = "black";//switch to dark mode
+                document.body.style.color = "white";
+            }
+        }
+    </script>
+
+</body>
+</html>
